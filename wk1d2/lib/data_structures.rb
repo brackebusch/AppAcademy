@@ -45,12 +45,10 @@ end
 # repeating letters. Capital letters count as repeats of lowercase ones, e.g.,
 # repeating_letters?("Aa") => true
 def repeating_letters?(str)
-   arr = str.downcase.split("")
+  arr = str.downcase.split("")
 
-   arr.each_with_index do |x, idx|
-    if arr.count(x) > 1
-      return true if arr[idx+1] = x  
-    end
+  arr.each_with_index do |x, idx|
+    return true if x == arr[idx+1]
   end
 
   false
@@ -81,10 +79,7 @@ end
 # provided. HINT: use the take(num) and drop(num) methods. You won't need much
 # code, but the solution is tricky!
 def my_rotate(arr, offset=1)
-  offset = offset % arr.length if offset.abs > arr.length
-  new_arr = []
-  new_arr += arr[offset..-1]
-  new_arr += arr[0...offset]
-  # arr.delete_at(arr.index (offset+1))
+  offset = offset % arr.length 
+  arr[offset..-1] + arr[0...offset]
   # your code goes here
 end
