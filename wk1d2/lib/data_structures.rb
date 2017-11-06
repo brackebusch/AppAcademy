@@ -82,7 +82,6 @@ end
 # code, but the solution is tricky!
 def my_rotate(arr, offset=1)
   offset = offset % arr.length if offset.abs > arr.length
-  p offset
   new_arr = []
   new_arr += arr[offset..-1]
   new_arr += arr[0...offset]
