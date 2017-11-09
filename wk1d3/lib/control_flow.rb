@@ -2,26 +2,43 @@
 
 # Return the argument with all its lowercase characters removed.
 def destructive_uppercase(str)
-
+    str.chars.each do |ch|
+        str.delete!(ch) if ch.downcase == ch
+    end 
+    str
 end
 
 # Return the middle character of a string. Return the middle two characters if
 # the word is of even length, e.g. middle_substring("middle") => "dd",
 # middle_substring("mid") => "i"
 def middle_substring(str)
+    return str[(str.length)/2] if str.length.odd?
+    str[str.length/2-1]+str[str.length/2]
 end
 
 # Return the number of vowels in a string.
 VOWELS = %w(a e i o u)
 def num_vowels(str)
+    count = 0
 
+    str.chars.each do |ch|
+        count +=1 if VOWELS.include?(ch.downcase)
+    end
+
+    count
 end
 
 # Return the factoral of the argument (num). A number's factorial is the product
 # of all whole numbers between 1 and the number itself. Assume the argument will
 # be > 0.
 def factorial(num)
-
+    factoral = 1
+    while num > 0
+        factoral *= num
+        num -= 1
+    end
+    
+    factoral
 end
 
 
@@ -30,14 +47,27 @@ end
 # Write your own version of the join method. separator = "" ensures that the
 # default seperator is an empty string.
 def my_join(arr, separator = "")
+    new_string = ""
+    
+    arr.each do |item|
+        new_string += item + separator
+    end
 
+    return new_string if separator == ""
+    new_string[0...-1]
 end
 
 # Write a method that converts its argument to weirdcase, where every odd
 # character is lowercase and every even is uppercase, e.g.
 # weirdcase("weirdcase") => "wEiRdCaSe"
 def weirdcase(str)
+    str.downcase!
 
+    str.each_char.with_index do |ch, idx|
+        str[idx] = ch.upcase if idx.odd?
+    end
+
+    str
 end
 
 # Reverse all words of five more more letters in a string. Return the resulting
