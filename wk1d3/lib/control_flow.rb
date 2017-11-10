@@ -74,7 +74,13 @@ end
 # string, e.g., reverse_five("Looks like my luck has reversed") => "skooL like
 # my luck has desrever")
 def reverse_five(str)
-
+    str = str.split(" ")
+    arr = []
+    str.each do |item|
+        item = item.reverse if item.length > 4
+        arr << item
+    end
+    my_join(arr, " ")
 end
 
 # Return an array of integers from 1 to n (inclusive), except for each multiple
@@ -82,7 +88,16 @@ end
 # integer with "buzz", and for each multiple of both 3 and 5, replace the
 # integer with "fizzbuzz".
 def fizzbuzz(n)
-
+    (1..n).to_a.map { |int| 
+        if int % 3 == 0 && int % 5 == 0
+            int = "fizzbuzz"
+        elsif int % 5 == 0
+            int = "buzz"
+        elsif int % 3 == 0
+            int = "fizz"
+        end
+        int
+    }
 end
 
 
@@ -91,28 +106,45 @@ end
 # Write a method that returns a new array containing all the elements of the
 # original array in reverse order.
 def my_reverse(arr)
-
+    new_arr = []
+    arr.each { |el|
+        new_arr.unshift(el)
+    }
+    new_arr
 end
 
 # Write a method that returns a boolean indicating whether the argument is
 # prime.
 def prime?(num)
-
+    return false if num == 1  
+    (2..(num/2)).each { |counter| return false if num % counter == 0 }
+    true
 end
 
 # Write a method that returns a sorted array of the factors of its argument.
 def factors(num)
-
+    arr =[]
+    (1..num).each { |x|
+        arr << x if num % x == 0
+    }
+    arr
 end
 
 # Write a method that returns a sorted array of the prime factors of its argument.
 def prime_factors(num)
+    arr = factors(num)
+    final = []
 
+    arr.each { |i|
+       final << i if prime?(i)
+    }
+
+    final
 end
 
 # Write a method that returns the number of prime factors of its argument.
 def num_prime_factors(num)
-
+    prime_factors(num).length
 end
 
 
@@ -121,5 +153,27 @@ end
 # Return the one integer in an array that is even or odd while the rest are of
 # opposite parity, e.g. oddball([1,2,3]) => 2, oddball([2,4,5,6] => 5)
 def oddball(arr)
+    odd_count = 0
+    even_count = 0
+    idx1 = nil
+    idx2 = nil
+
+    arr.each.with_index do |x, idx|
+        if x.odd?
+            odd_count +=1
+            idx1 = idx
+        else
+            even_count +=1
+            idx2 = idx
+        end
+
+        if odd_count > 1 && even_count
+            return arr[idx2]
+        elsif even_count > 1 && odd_count
+            return arr[idx1]
+        end
+    end
+    
+
 
 end
