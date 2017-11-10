@@ -80,7 +80,7 @@ def reverse_five(str)
         item = item.reverse if item.length > 4
         arr << item
     end
-    my_join(arr, " ")
+    arr.join(" ")
 end
 
 # Return an array of integers from 1 to n (inclusive), except for each multiple
@@ -88,7 +88,7 @@ end
 # integer with "buzz", and for each multiple of both 3 and 5, replace the
 # integer with "fizzbuzz".
 def fizzbuzz(n)
-    (1..n).to_a.map { |int| 
+    (1..n).to_a.map do |int| 
         if int % 3 == 0 && int % 5 == 0
             int = "fizzbuzz"
         elsif int % 5 == 0
@@ -97,7 +97,7 @@ def fizzbuzz(n)
             int = "fizz"
         end
         int
-    }
+    end
 end
 
 
@@ -124,9 +124,9 @@ end
 # Write a method that returns a sorted array of the factors of its argument.
 def factors(num)
     arr =[]
-    (1..num).each { |x|
+    (1..num).each do |x|
         arr << x if num % x == 0
-    }
+    end
     arr
 end
 
@@ -135,9 +135,9 @@ def prime_factors(num)
     arr = factors(num)
     final = []
 
-    arr.each { |i|
+    arr.each do |i|
        final << i if prime?(i)
-    }
+    end
 
     final
 end
@@ -153,27 +153,18 @@ end
 # Return the one integer in an array that is even or odd while the rest are of
 # opposite parity, e.g. oddball([1,2,3]) => 2, oddball([2,4,5,6] => 5)
 def oddball(arr)
-    odd_count = 0
-    even_count = 0
-    idx1 = nil
-    idx2 = nil
+    evens = []
+    odds = []
 
-    arr.each.with_index do |x, idx|
-        if x.odd?
-            odd_count +=1
-            idx1 = idx
+    arr.each do |x|
+        if x.even?
+            evens << x
         else
-            even_count +=1
-            idx2 = idx
-        end
-
-        if odd_count > 1 && even_count
-            return arr[idx2]
-        elsif even_count > 1 && odd_count
-            return arr[idx1]
+            odds << x
         end
     end
     
-
-
+    return evens[0] if odds.length > 1
+    odds[0]
+        
 end
