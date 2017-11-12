@@ -3,22 +3,36 @@
 # Define a method that returns an array of only the even numbers in its argument
 # (an array of integers).
 def get_evens(arr)
+    arr.reduce([]) do |acc, el|
+        if el.even?
+            acc << el
+        else 
+            acc
+        end  
+    end 
 end
 
 # Define a method that returns a new array of all the elements in its argument
 # doubled. This method should *not* modify the original array.
 def calculate_doubles(arr)
+    arr.map {|el| el * 2}
 end
 
 # Define a method that returns its argument with all the argument's elements
 # doubled. This method should modify the original array.
 def calculate_doubles!(arr)
+    arr.map! {|el| el * 2}
 end
 
 # Define a method that returns the sum of each element in its argument
 # multiplied by its index. array_sum_with_index([2, 9, 7]) => 23 because (2 * 0) +
 # (9 * 1) + (7 * 2) = 0 + 9 + 14 = 23
 def array_sum_with_index(arr)
+    sum = 0
+    arr.each_with_index do |el, idx|
+        sum += el * idx
+    end
+    sum
 end
 
 # MEDIUM
@@ -27,6 +41,13 @@ end
 # the actual retail price without going over that price. Assume there is always
 # at least one bid below the retail price.
 def price_is_right(bids, actual_retail_price)
+    bids.reduce do |acc, el|
+        if el < actual_retail_price
+            el
+        else
+            acc    
+        end
+    end
 end
 
 # Given an array of numbers, return an array of those numbers that have at least
@@ -35,9 +56,23 @@ end
 # 2, 4, 8, 16) and the others have fewer than five factors. Consider writing a
 # helper method num_factors
 def at_least_n_factors(numbers, n)
+    numbers.reduce([]) do |acc, el|
+        if num_factors(el).length >= n
+            acc << el
+        else
+            acc
+        end
+    end
 end
 
 def num_factors(number)
+    (1..number).to_a.reduce([]) do |arr, div|
+        if number % div == 0
+            arr << div 
+        else
+            arr
+        end
+    end
 end
 
 # HARD
@@ -46,9 +81,18 @@ end
 # words whose vowels appear in order. You may wish to write a helper method:
 # ordered_vowel_word?
 def ordered_vowel_words(words)
+    words.reduce([]) do |acc, el|
+        if ordered_vowel_word?(el)
+            acc << el
+        else
+            acc
+        end
+    end
 end
 
 def ordered_vowel_word?(word)
+    vowels = word.chars.select {|char| ('aeiouy').include?(char)}
+    vowels == vowels.sort
 end
 
 # Given an array of numbers, return an array of all the products remaining when
@@ -64,6 +108,7 @@ end
 # 10, because you take out 3, leaving 1 * 2 * 5 6, because you take out 5,
 # leaving 1 * 2 * 3
 def products_except_me(numbers)
+    numbers.map {|el| numbers.reduce(:*) / el}
 end
 
 def array_product(array)

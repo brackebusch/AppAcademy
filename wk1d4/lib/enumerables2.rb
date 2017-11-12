@@ -5,17 +5,24 @@ require 'byebug'
 # Define a method that returns the sum of all the elements in its argument (an
 # array of numbers).
 def array_sum(arr)
+    arr.reduce(:+)
 end
 
 # Define a method that returns a boolean indicating whether substring is a
 # substring of each string in the long_strings array.
 # Hint: you may want a sub_tring? helper method
 def in_all_strings?(long_strings, substring)
+    long_strings.include?(substring)
 end
 
 # Define a method that accepts a string of lower case words (no punctuation) and
 # returns an array of letters that occur more than once, sorted alphabetically.
 def non_unique_letters(string)
+    string.split("").sort.reduce([]) do |acc, el|
+       aa << el if string.count(el) > 1
+       string.delete(el)
+    end
+
 end
 
 # Define a method that returns an array of the longest two words (in order) in
