@@ -59,12 +59,30 @@ end
 # Define a method that, given an array of numbers, returns a hash with "even"
 # and "odd" as keys and the frequency of each parity as values.
 def evens_and_odds(numbers)
+    hsh = {even:0, odd:0}
+
+    numbers.each do |el|
+        if el.even?
+            hsh[:even] += 1
+        else
+            hsh[:odd] += 1
+        end
+    end
+
+    hsh
 end
 
 # Define a method that, given a string, returns the most common vowel. If
 # there's a tie, return the vowel that occurs earlier in the alphabet. Assume
 # all letters are lower case.
 def most_common_vowel(string)
+    hsh = Hash.new(0)
+    string.chars.each do |let|
+        if 'aeiouy'.include?(let)
+            hsh[let] +=1
+        end
+    end
+    hsh.sort_by {|k,v| v}[-1][0]
 end
 
 # HARD
@@ -77,6 +95,24 @@ end
 # fall_and_winter_birthdays(students_with_birthdays) => [ ["Bertie", "Dottie"],
 # ["Bertie", "Warren"], ["Dottie", "Warren"] ]
 def fall_and_winter_birthdays(students)
+    arr = []
+
+    students.each do |k,v|
+        if v > 6
+            arr << k
+        end
+    end
+
+    combo_array = []
+
+    arr.each_with_index do |el, idx|
+        while idx < arr.length - 1
+            combo_array << [el,arr[idx+1]]
+            idx += 1 
+        end
+    end
+
+    combo_array
 end
 
 # Define a method that, given an array of specimens, returns the biodiversity
@@ -85,6 +121,13 @@ end
 # "cat", "cat"]) => 1 biodiversity_index(["cat", "leopard-spotted ferret",
 # "dog"]) => 9
 def biodiversity_index(specimens)
+    hsh = Hash.new(0)
+    specimens.each do |x|
+        hsh[x] += 1
+    end
+    arr = hsh.sort_by {|k,v| v}
+
+    hsh.length**2 * (arr[0][1]/arr[-1][1])
 end
 
 # Define a method that, given the string of a respectable business sign, returns
@@ -93,7 +136,25 @@ end
 # can_tweak_sign("We're having a yellow ferret sale for a good cause over at the
 # pet shop!", "Leopard ferrets forever yo") => true
 def can_tweak_sign?(normal_sign, vandalized_sign)
+    sign_1 = Hash.new(0)
+    sign_2 = Hash.new(0)
+
+    normal_sign.downcase.chars.each do |char|
+        sign_1[char] +=1
+    end
+    
+    vandalized_sign.downcase.chars.each do |char|
+        sign_2[char] += 1
+    end
+
+    sign_2.each do |k,v|
+        if sign_1[k] < sign_2[k]
+            return false
+        end 
+    end
+    true
 end
 
 def character_count(str)
+
 end
