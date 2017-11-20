@@ -40,6 +40,10 @@ class Hash
   # Hash#my_select method should have the functionailty of Hash#select described
   # above. Do not use Hash#select in your method.
 
+
+  # NOTE: I did not solve this problem without the solution
+  # The use of &proc was breifly covered in a reading, and the use of self
+  # was not covered until after this assesement - which was quite frustrating to find out
   def my_select(&prc)
     new_hash = {}
     
@@ -64,6 +68,12 @@ class Hash
   # is not given, your method should provide default merging behavior. Do not use
   # Hash#merge in your method.
 
+
+
+  # NOTE: I did not solve this problem without the solution
+  # The use of &proc was breifly covered in a reading, and the use of self
+  # was not covered until after this assesement - which was quite frustrating to find out
+  
   def my_merge(hash, &prc)
     prc ||= Proc.new { |k, oldval, newval| newval }
     new_hash = {}
