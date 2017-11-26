@@ -4,6 +4,13 @@
 # factors of a given number.
 
 def factors(num)
+  arr = []
+  
+  (1..(num/2)).each do |is_factor|
+    arr << is_factor if num % is_factor == 0
+  end
+
+  arr << num
 end
 
 # ### Bubble Sort
@@ -47,10 +54,49 @@ end
 
 class Array
   def bubble_sort!
+    sorted = false
+    until sorted
+      sorted = true
+
+      each_index do |i|
+        next if i + 1 == self.length
+        j = i + 1
+        if self[i] > self[j]
+          sorted = false
+          self[i], self[j] = self[j], self[i]
+        end
+      end
+    end
+
+    self
   end
 
-  def bubble_sort(&prc)
+
+  def bubble_sort!(&prc)
+    prc ||= Proc.new { |x, y| x <=> y }
+
+    sorted = false
+    until sorted
+      sorted = true
+
+      each_index do |i|
+        next if i + 1 == self.length
+        j = i + 1
+        if prc.call(self[i], self[j]) == 1
+          sorted = false
+          self[i], self[j] = self[j], self[i]
+        end
+      end
+    end
+
+    self
   end
+
+
+  def bubble_sort(&prc)
+    self.dup.bubble_sort!(&prc)
+  end
+
 end
 
 # ### Substrings and Subwords
@@ -67,9 +113,18 @@ end
 # words).
 
 def substrings(string)
+  arr = []
+  string.each_char.with_index do |let, idx|
+    (idx..(string.length-1)).each do |idx2|
+      arr << string[idx..idx2]
+    end
+  end
+  p arr
+  arr
 end
 
 def subwords(word, dictionary)
+  substrings(word).select {|el| dictionary.include?(el)}.uniq
 end
 
 # ### Doubler
@@ -77,6 +132,7 @@ end
 # array with the original elements multiplied by two.
 
 def doubler(array)
+  array.map {|el| el*2}
 end
 
 # ### My Each
@@ -104,7 +160,16 @@ end
 
 class Array
   def my_each(&prc)
+    i = 0
+
+    while i < self.count
+      proc.call(self[i])
+      i += 1
+    end
+  
+  self
   end
+
 end
 
 # ### My Enumerable Methods
@@ -122,12 +187,21 @@ end
 
 class Array
   def my_map(&prc)
+    result = []
+    my_each { |el| result << prc.call(el) }
+    result
   end
 
   def my_select(&prc)
+    result = []
+    my_each { |el| result << el if prc.call(el) }
+    result
   end
 
   def my_inject(&blk)
+    val = self.first
+    self.drop(1).my_each { |el| val = blk.call(val, el) }
+    val
   end
 end
 
@@ -141,4 +215,7 @@ end
 # ```
 
 def concatenate(strings)
+  strings.inject("") do |acc, el|
+    acc + el
+  end
 end

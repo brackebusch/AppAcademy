@@ -17,3 +17,4 @@ end
 def repeater(repeats = 1, &proc)
     repeats.times {proc.call}
 end
+
