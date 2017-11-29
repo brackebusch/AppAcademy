@@ -42,8 +42,8 @@
 class TowersOfHanoi
     attr_accessor :towers
 
-    def initialize(towers)
-        @towers = [[3,2,1][][]]
+    def initialize
+        @towers = [[3,2,1], [], []]
     end
 
     def play
@@ -52,7 +52,7 @@ class TowersOfHanoi
 
         until won?
             puts "Select tower to move from (1, 2, or 3)"
-            from_tower = gets.comp.to_i
+            from_tower = gets.chomp.to_i
             puts "Select tower to move to (1, 2, or 3)"
             to_tower = gets.chomp.to_i
             move(from_tower, to_tower)
@@ -62,11 +62,11 @@ class TowersOfHanoi
     end
 
     def render
-        puts " #{check_spot(towers[0][2])}     #{check_spot(towers[1][2])}     #{check_spot(towers[2][2])}"
-        puts " #{check_spot(towers[0][1])}     #{check_spot(towers[1][1])}     #{check_spot(towers[2][1])}"
-        puts " #{check_spot(towers[0][0])}     #{check_spot(towers[1][0])}     #{check_spot(towers[2][0])}"
-        puts "___  ___  ___"
-    
+        puts " #{check_spot(@towers[0][2])}    #{check_spot(@towers[1][2])}    #{check_spot(@towers[2][2])}"
+        puts " #{check_spot(@towers[0][1])}    #{check_spot(@towers[1][1])}    #{check_spot(@towers[2][1])}"
+        puts " #{check_spot(@towers[0][0])}    #{check_spot(@towers[1][0])}    #{check_spot(@towers[2][0])}"
+        puts "---  ---  ---"
+        3.times {puts "\n"}
     end
 
     def check_spot(disk)
@@ -78,22 +78,23 @@ class TowersOfHanoi
     end
 
     def won?
-        return true if towers[1] == [3,2,1] || towers[2] == [3,2,1]
+        return true if @towers[1] == [3,2,1] || @towers[2] == [3,2,1]
         false
     end
 
     def valid_move?(from_tower, to_tower)
-        return true if towers[to_tower].last > towers[from_tower].last || towers[to_tower] == []
+        return true if @towers[from_tower] != [] && (@towers[to_tower] == [] || @towers[to_tower].last > @towers[from_tower].last)
         false
     end
 
     def move(from_tower, to_tower)
         if valid_move?(from_tower, to_tower)
-            towers[to_tower].push(towers[from_tower].pop)
+            @towers[to_tower].push(@towers[from_tower].pop)
             render
         else
-            raise "That is not a legal move. #{towers[to_tower].last} is greater than #{towers[from_tower].last}."
+            raise "That is not a legal move."
         end
     end
 
 end
+#{@towers[to_tower].last} is greater than #{@towers[from_tower].last}
