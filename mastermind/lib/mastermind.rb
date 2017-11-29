@@ -47,9 +47,9 @@ class Code
 
   def near_matches(user_code)
     color_not_place = 0
-    pegs.each.with_index do |color, i|
-      if self[i] != user_code[i] && pegs.include?(color)
-        color_not_place +=1 
+    pegs.each_with_index do |color, i|
+      if self[i] != user_code[i] && self[0..3].include?(user_code[i])
+        color_not_place +=1
       end
     end
 
