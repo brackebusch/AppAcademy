@@ -20,10 +20,11 @@
 def transmogrify(string, options = {})
     defaults = {times: 1, upcase: false, reverse: false}
 
-    options = defaults.merge(options)
+    actions = defaults.merge(options)
+    
+    string = string.upcase if actions[:upcase]
+    string = string.reverse if actions[:reverse]
 
-    string = string.upcase if options[:upcase]
-    string = string.reverse if options[:reverse]
-
-    string * options[:times]
+    string * actions[:times]
+    
 end
