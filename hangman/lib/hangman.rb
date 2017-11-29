@@ -83,7 +83,6 @@ class HumanPlayer
     puts "Player guessed #{guess}"
     puts "What positions does that occur at?"
 
-    # didn't check for bogus input here; got lazy :-)
     gets.chomp.split(",").map { |i_str| Integer(i_str) }
   end
 
@@ -121,23 +120,17 @@ class ComputerPlayer
   end
 
   def register_secret_length(length)
-    # begining to play again; reset candidate_words
     @candidate_words = @dictionary.select { |word| word.length == length }
   end
 
   def guess(board)
-    # I left this here so you can see it narrow things down.
-    # p @candidate_words
+
 
     freq_table = freq_table(board)
 
     most_frequent_letters = freq_table.sort_by { |letter, count| count }
     letter, _ = most_frequent_letters.last
 
-    # we'll never repeat a guess because we only look at unfilled
-    # positions to calculate frequency, and we remove a word from the
-    # candidates if it has a guessed letter in an unfilled position on
-    # the board.
     letter
   end
 
@@ -165,11 +158,9 @@ class ComputerPlayer
 
   private
   def freq_table(board)
-    # this makes 0 the default value; see the RubyDoc.
     freq_table = Hash.new(0)
     @candidate_words.each do |word|
       board.each_with_index do |letter, index|
-        # only count letters at missing positions
         freq_table[word[index]] += 1 if letter.nil?
       end
     end
@@ -179,7 +170,6 @@ class ComputerPlayer
 end
 
 if __FILE__ == $PROGRAM_NAME
-  # use print so that user input happens on the same line
   print "Guesser: Computer (yes/no)? "
   if gets.chomp == "yes"
     guesser = ComputerPlayer.player_with_dict_file("dictionary.txt")
