@@ -39,7 +39,7 @@
 # ## And some extras:
 # * Each course should also take a set of days of the week (`:mon`,
 #   `:tue`, ...), plus a time block (assume each day is broken into 8
-#   consecutive time blocks). So a course could meet
+#   consecutive time blocks). So acd course could meet
 #   `[:mon, :wed, :fri]` during block #1.
 #     * Update your `#initialize` method to also take a time block and
 #       days of the week.
