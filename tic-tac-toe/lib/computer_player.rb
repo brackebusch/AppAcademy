@@ -6,6 +6,10 @@ class ComputerPlayer
       @name = name
     end
   
+    def display(board)
+        @board = board
+    end
+
     def get_move
       moves = []
       (0..2).each do |row|
@@ -32,8 +36,5 @@ class ComputerPlayer
         false
       end
     end
-  
-    def display(board)
-      @board = board
-    end
+
 end

@@ -7,7 +7,7 @@ class HumanPlayer
     end
   
     def get_move
-      puts "Where would you like to move? (row, col)"
+      puts "Where would you like to go? "
       gets.chomp.split(",").map(&:to_i)
     end
   
